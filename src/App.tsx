@@ -93,7 +93,7 @@ export const App = () => {
             </span>
           )}
         </div>
-        {isLoading ? null : <DownloadLink data={contributions} />}
+        {isLoading ? null : <DownloadLink data={data?.contributions} />}
       </Grid>
 
       {isLoading ? (
