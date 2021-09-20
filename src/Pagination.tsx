@@ -46,12 +46,12 @@ export const Pagination = ({
       <span style={{ margin: '0 8px' }}>|</span>
       <span style={{ marginRight: '8px' }}>Go to page:</span>
       <Input
-        onChange={e => {
-          const page = e.target.value ? Number(e.target.value) - 1 : 0;
+        onChange={event => {
+          const page = event.target.value ? Number(event.target.value) - 1 : 0;
           gotoPage(page);
         }}
-        placeholder="2"
-        style={{ width: '50px' }}
+        placeholder="ex: 2"
+        style={{ width: '72px' }}
       />
     </span>
     <Dropdown

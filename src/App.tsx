@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Column } from 'react-table';
 import axios from 'axios';
 import { BigNumber } from 'bignumber.js';
-import { Container, Grid, Header, Loader } from 'semantic-ui-react';
+import { Container, Grid, Header, Input, Loader } from 'semantic-ui-react';
 import dateformat from 'dateformat';
 import { DownloadLink } from './DownloadLink';
 import { ContributionTable } from './ContributionTable';
@@ -14,6 +14,8 @@ const formatAmount = (value: string) => {
 };
 
 export const App = () => {
+  const [address, setAddress] = useState('');
+
   const { data, isLoading, refetch } = useQuery('repoData', async () => {
     const { data } = await axios('/api/getTopContributors');
     return data;
@@ -51,7 +53,26 @@ export const App = () => {
     }
   }, [data, refetch]);
 
-  console.log(data?.timestamp);
+  useEffect(() => {
+    if (address) {
+    }
+  }, [address]);
+
+  const searchAddress = useCallback(
+    (value: string) =>
+      data?.contributions.filter((contribution: Contribution) =>
+        contribution.account.includes(value),
+      ),
+    [data?.contributions],
+  );
+
+  const contributions = useMemo(() => {
+    if (address) {
+      return searchAddress(address);
+    }
+
+    return data?.contributions;
+  }, [address, data, searchAddress]);
 
   const lastUpdated = useMemo(
     () => dateformat(data?.timestamp, 'UTC: mmm dS, yyyy, h:MM:ss TT Z'),
@@ -72,7 +93,7 @@ export const App = () => {
             </span>
           )}
         </div>
-        {isLoading ? null : <DownloadLink data={data?.contributions} />}
+        {isLoading ? null : <DownloadLink data={contributions} />}
       </Grid>
 
       {isLoading ? (
@@ -90,14 +111,32 @@ export const App = () => {
           </Loader>
         </div>
       ) : (
-        <div
-          style={{
-            width: '900px',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <ContributionTable columns={columns} data={data?.contributions} />
+        <div>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'end',
+              paddingBottom: '16px',
+            }}
+          >
+            <Input
+              spellcheck="false"
+              onChange={event => setAddress(event.target.value)}
+              placeholder="Search wallet address"
+              style={{ width: '500px' }}
+              value={address}
+            />
+          </div>
+          <div
+            style={{
+              width: '900px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <ContributionTable columns={columns} data={contributions} />
+          </div>
         </div>
       )}
     </Container>
