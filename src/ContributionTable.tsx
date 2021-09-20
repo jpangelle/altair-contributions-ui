@@ -34,7 +34,12 @@ export const ContributionTable = ({ columns, data }: Props) => {
     <div style={{ width: '100%' }}>
       {data.length ? (
         <>
-          <Table celled {...getTableProps()}>
+          <Table
+            striped
+            celled
+            {...getTableProps()}
+            style={{ fontSize: '16px' }}
+          >
             <Table.Header>
               {headerGroups.map(headerGroup => (
                 <Table.Row {...headerGroup.getHeaderGroupProps()}>

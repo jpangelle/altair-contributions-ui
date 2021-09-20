@@ -25,17 +25,36 @@ export const Pagination = ({
   previousPage,
   setPageSize,
 }: Props) => (
-  <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-    <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'end',
+      alignItems: 'center',
+      paddingBottom: '48px',
+    }}
+  >
+    <Button
+      onClick={() => gotoPage(0)}
+      disabled={!canPreviousPage}
+      color="blue"
+    >
       {'<<'}
     </Button>
-    <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
+    <Button
+      onClick={() => previousPage()}
+      disabled={!canPreviousPage}
+      color="blue"
+    >
       {'<'}
     </Button>
-    <Button onClick={() => nextPage()} disabled={!canNextPage}>
+    <Button onClick={() => nextPage()} disabled={!canNextPage} color="blue">
       {'>'}
     </Button>
-    <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+    <Button
+      onClick={() => gotoPage(pageCount - 1)}
+      disabled={!canNextPage}
+      color="blue"
+    >
       {'>>'}
     </Button>
     <span style={{ margin: '0 8px' }}>Page</span>

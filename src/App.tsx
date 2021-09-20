@@ -24,7 +24,11 @@ export const App = () => {
   const columns = useMemo(
     () =>
       [
-        { accessor: 'account', Header: 'Address' },
+        {
+          accessor: 'account',
+          Header: 'Address',
+          Cell: props => <code>{props.value}</code>,
+        },
         {
           accessor: 'amount',
           Cell: props => (
@@ -80,7 +84,7 @@ export const App = () => {
   );
 
   return (
-    <Container style={{ marginTop: '24px', width: '900px' }}>
+    <Container style={{ paddingTop: '24px', width: '900px', height: '100%' }}>
       <Grid
         columns={2}
         style={{ padding: '48px 0', justifyContent: 'space-between' }}
@@ -130,7 +134,7 @@ export const App = () => {
           </div>
           <div
             style={{
-              width: '900px',
+              width: '100%',
               display: 'flex',
               justifyContent: 'center',
             }}
